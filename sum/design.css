@@ -1,3 +1,4 @@
-#site_container{
-    position:relative;
+main{
+    display: flex;
+    flex-direction: column;
 }
