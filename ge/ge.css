@@ -14,3 +14,18 @@ body {
 }
 
 a:link, a:visited, a:hover, a:active {color:#4b4c46;}
+
+.float-wrap {
+    overflow:hidden;
+}
+.sns-wrap {
+    text-align: right;
+}
+
+.logo {
+    float:left;
+}
+
+.menu {
+    float:right;
+}
