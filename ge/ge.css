@@ -8,6 +8,10 @@ body {
     min-width: fit-content;
 }
 
+h2 {
+    font-size: 30px;
+}
+
 .sns {
     width: 30px;
     height: 30px;
@@ -17,9 +21,6 @@ a:link, a:visited, a:hover, a:active {color:#4b4c46;}
 
 .float-wrap {
     overflow:hidden;
-}
-.sns-wrap {
-    text-align: right;
 }
 
 .logo {
