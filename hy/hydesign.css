@@ -1,1 +1,29 @@
-
+body{
+    background-color:yellow;
+    padding:0px;
+    margin-left : 0px;
+    margin-right : 0px;
+    margin-bottom : 0px;
+    margin-top : 0px;
+}
+#hd {
+    background-color:purple;
+    width:100%;
+    height:150px;
+}
+#section1_frame{
+    width:100%;
+    height:950px;
+    background-color:black;
+}
+#upper_half{
+    width:100%;
+    height:600px;
+    background-color:green;
+}
+#upper_half_bg{
+    background:url(../img/section1_cover.jpeg);
+    background-size:cover;
+    width:100%;
+    height:600px;
+}
