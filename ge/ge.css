@@ -28,7 +28,40 @@ header nav ul {display:flex;text-align: center;}
     margin-top: auto;
     margin-bottom: auto;
 }
-
+.content {
+    height: 710px;
+    padding: 30px;
+    margin: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid black;
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.1);
+}
 a:link, a:visited, a:hover, a:active {color:#4b4c46;}
 
+.copyright {
+    float:left;
+    margin-left:200px;
+    margin-right:70px;
+}
 
+.site {
+    float:left;
+    margin-right:10px;
+    border-right:1px solid #4b4c46;
+}
+
+.address {
+    float:right;
+    margin-right:30px;
+}
+
+footer {
+    font-size: 12px;
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    margin-bottom: auto;
+
+}
