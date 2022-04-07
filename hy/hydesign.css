@@ -1,5 +1,5 @@
 body{
-    background-color:yellow;
+    background-color:white;
     padding:0px;
     margin-left : 0px;
     margin-right : 0px;
@@ -12,6 +12,8 @@ body{
     height:150px;
 }
 #section1_frame{
+    display: flex;
+    flex-direction:column;
     width:100%;
     height:950px;
     background-color:black;
@@ -26,4 +28,9 @@ body{
     background-size:cover;
     width:100%;
     height:600px;
+}
+#lower_half{
+    background-color: rgb(252,211,7);
+    width:100%;
+    height:350px;
 }
