@@ -11,11 +11,22 @@ header {display: flex;
 }
 header h1 {position:absolute;left:-2000px;}
 header nav ul {display:flex;text-align: center;}
-header nav ul li {padding: 20px 10px;width: 88px;}
+
+.menu {
+    padding: 20px 10px;
+    width: 88px;
+}
+
+.sns {
+    padding-right: 20px;
+}
 
 .logo {
-    height: 60px;
-    width: 280px;
+    height: 50px;
+    width: 270px;
+    margin-left: 280px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 a:link, a:visited, a:hover, a:active {color:#4b4c46;}
