@@ -1,1 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800&display=swap');
 
+* {
+    font-family: 'Montserrat';
+}
+
+body {
+    min-width: fit-content;
+}
+
+.sns {
+    width: 30px;
+    height: 30px;
+}
+
+a:link, a:visited, a:hover, a:active {color:#4b4c46;}
