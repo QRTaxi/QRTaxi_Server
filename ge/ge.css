@@ -4,29 +4,20 @@
     font-family: 'Montserrat';
 }
 
-body {
-    min-width: fit-content;
-}
 
-h2 {
-    font-size: 30px;
+header {display: flex;
+    justify-content: space-between;
+    height: 100px;
 }
+header h1 {position:absolute;left:-2000px;}
+header nav ul {display:flex;text-align: center;}
+header nav ul li {padding: 20px 10px;width: 88px;}
 
-.sns {
-    width: 30px;
-    height: 30px;
+.logo {
+    height: 60px;
+    width: 280px;
 }
 
 a:link, a:visited, a:hover, a:active {color:#4b4c46;}
 
-.float-wrap {
-    overflow:hidden;
-}
 
-.logo {
-    float:left;
-}
-
-.menu {
-    float:right;
-}
