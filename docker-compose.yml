@@ -1,0 +1,23 @@
+version: '3'
+services:
+  nginx:
+    build: ./config/nginx
+    ports:
+      - "80:80"
+    image: 11thbackend/nginx:latest
+    depends_on:
+      - web
+    platform: linux/amd64
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: gunicorn --bind 0.0.0.0:8000 hackathon.wsgi:application
+    ports:
+      - "8000:8000"
+    platform: linux/amd64
+    image: 11thbackend/web:latest
+    environment:
+      - DJANGO_SETTINGS_MODULE=hackathon.settings.prod
+    env_file:
+      - .env
