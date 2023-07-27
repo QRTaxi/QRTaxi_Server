@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Set executable permission for the script
         run: chmod +x .github/write_env_file.sh
 
@@ -59,4 +59,4 @@ jobs:
           host: ${{ secrets.WAS_HOST }}
           username: ec2-user
           key: ${{ secrets.KEY }}
-          script: ..github/deploy.sh
+          script: .github/deploy.sh
