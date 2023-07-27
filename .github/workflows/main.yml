@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Set executable permission for the script
+        run: chmod +x .github/write_env_file.sh
 
       - name: write env file
         run: .github/write_env_file.sh
