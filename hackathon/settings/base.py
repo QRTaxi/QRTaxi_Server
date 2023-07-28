@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'web']
+ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
