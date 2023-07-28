@@ -5,6 +5,8 @@ services:
     ports:
       - "80:80"
     image: 11thbackend/nginx:latest
+    volumes:
+      - ./ssl:/etc/nginx/ssl
     depends_on:
       - web
     platform: linux/amd64
