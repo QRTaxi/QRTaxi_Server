@@ -2,6 +2,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from .service.test_service import *
+from .models import *
+from django.shortcuts import render
 
 class TestView(APIView):
     """
@@ -16,3 +18,9 @@ class TestView(APIView):
     def post(self, request, *args, **kwargs):
         data = create_post(request)
         return Response(data, status=status.HTTP_200_OK)
+
+def liveblog_index(request):
+    post_qs = Post.objects.all()
+    return render(request, "example.html", {
+        "post_list": post_qs,
+    })

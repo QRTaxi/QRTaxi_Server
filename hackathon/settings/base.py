@@ -22,6 +22,8 @@ CORS_ORIGIN_WHITELIST = [
 # Application definition
 
 INSTALLED_APPS = [
+    "channels",
+    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,7 +65,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'hackathon.wsgi.application'
-
+ASGI_APPLICATION = "hackathon.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

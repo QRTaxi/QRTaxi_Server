@@ -12,7 +12,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: gunicorn --bind 0.0.0.0:8000 hackathon.wsgi:application
+    command: daphne -b 0.0.0.0 -p 8000 hackathon.asgi:application
     ports:
       - "8000:8000"
     platform: linux/amd64
@@ -21,3 +21,7 @@ services:
       - DJANGO_SETTINGS_MODULE=hackathon.settings.prod
     env_file:
       - .env
+  redis:
+    image: redis:7
+    ports:
+        - "6379:6379"
