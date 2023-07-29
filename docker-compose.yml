@@ -4,6 +4,8 @@ services:
     build: ./config/nginx
     ports:
       - "80:80"
+    volumes:
+      - static_volume:/static
     image: 11thbackend/nginx:latest
     depends_on:
       - web
@@ -12,7 +14,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: daphne -b 0.0.0.0 -p 8000 hackathon.asgi:application
+    volumes:
+      - static_volume:/data/static
+    command: ["./start.sh"]
     ports:
       - "8000:8000"
     platform: linux/amd64
@@ -25,3 +29,5 @@ services:
     image: redis:7
     ports:
         - "6379:6379"
+volumes:
+  static_volume:
