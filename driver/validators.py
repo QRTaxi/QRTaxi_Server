@@ -12,9 +12,9 @@ def validate_password(password):
 
 def validate_phone_num(phone_num):
     # 가운데에 하이픈이 입력한 경우
-    phone_num_reg1 = r"^(010)-\d{3,4}-\d{4}$"
+    phone_num_reg1 = r"^(01)[016789]-\d{3,4}-\d{4}$"
     # 하이픈, 공백 없이 입력한 경우
-    phone_num_reg2 = r"^(010)\d{3,4}\d{4}$"
+    phone_num_reg2 = r"^(01)[016789]\d{3,4}\d{4}$"
 
     phone_num_regex1 = re.compile(phone_num_reg1)
     phone_num_regex2 = re.compile(phone_num_reg2)
