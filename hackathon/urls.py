@@ -8,6 +8,11 @@ from rest_framework import permissions
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('test/', include("test.urls")),
+    path('driver/', include('driver.urls')),
+    path('qr/', include('qr.urls')),
+    path('call/', include('call.urls')),
+    path('mypage/', include('mypage.urls')),
+    path('report/', include('report.urls')),
 
 ]
 
