@@ -14,6 +14,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://127.0.0.1:8000', 'http://api.qrtaxi.kro.kr']
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
@@ -22,6 +23,8 @@ CORS_ORIGIN_WHITELIST = [
 # Application definition
 
 INSTALLED_APPS = [
+    "channels",
+    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,7 +66,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'hackathon.wsgi.application'
-
+ASGI_APPLICATION = "hackathon.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -107,9 +110,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'config/nginx/static')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATIC_ROOT = os.path.join(BASE_DIR, 'data/static')

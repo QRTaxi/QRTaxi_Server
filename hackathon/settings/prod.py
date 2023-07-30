@@ -5,7 +5,7 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 DATABASES = {
     'default': {
@@ -17,3 +17,13 @@ DATABASES = {
         'PORT': config('DB_PORT'),
     }
 }
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('redis', 6379)],  
+        },
+    },
+}
+
