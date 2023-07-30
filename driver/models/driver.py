@@ -1,9 +1,10 @@
-from django.utils import timezone
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-from .time import TimestampedModel
-from driver.managers import UserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.db import models
+from django.utils import timezone
+from driver.managers import UserManager
+
+from .time import TimestampedModel
+
 
 # AbstractBaseUser -> password, last_login, is_active
 class CustomDriver(AbstractBaseUser, PermissionsMixin, TimestampedModel):

@@ -1,11 +1,13 @@
-from dj_rest_auth.registration.serializers import RegisterSerializer
 from allauth.account.adapter import get_adapter
-from django.utils.translation import gettext_lazy as _
-from rest_framework import serializers
-from driver.validators import validate_password, validate_phone_num, validate_taxi_num
+from dj_rest_auth.registration.serializers import RegisterSerializer
 from django.core.exceptions import ValidationError
-from rest_framework.validators import UniqueValidator
+from django.utils.translation import gettext_lazy as _
 from driver.models import CustomDriver
+from driver.validators import (validate_password, validate_phone_num,
+                               validate_taxi_num)
+from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
+
 
 class CustomRegisterSerializer(RegisterSerializer):
     email = None
