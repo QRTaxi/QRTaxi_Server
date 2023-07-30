@@ -91,7 +91,7 @@
     };
     
     const ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
-    const ws_url = ws_scheme + '://' + window.location.host + '/ws/liveblog/';
+    const ws_url = ws_scheme + '://' + window.location.host + ':8000/ws/liveblog/';
 
     handlers.connect(ws_url);
     </script>

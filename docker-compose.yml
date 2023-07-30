@@ -15,7 +15,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - static_volume:/data/static
+      - static_volume:/project/data/static
     command: ["./start.sh"]
     ports:
       - "8000:8000"
