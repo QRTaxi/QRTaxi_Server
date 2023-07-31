@@ -26,7 +26,7 @@ class CustomDriver(AbstractBaseUser, PermissionsMixin, TimestampedModel):
         )
 
     birth = models.DateField(null=True)
-    car_type = models.CharField(null=True, max_length=20)
+    car_type = models.CharField(max_length=20, null=False, blank=False, default="")
     is_able = models.BooleanField(default=False)
 
     is_staff = models.BooleanField(default=False)
@@ -34,7 +34,7 @@ class CustomDriver(AbstractBaseUser, PermissionsMixin, TimestampedModel):
     date_joined = models.DateTimeField(default=timezone.now)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ["password", "name", "phone_num", "taxi_num"]
+    REQUIRED_FIELDS = ["password", "name", "phone_num", "taxi_num", "car_type"]
 
     objects = UserManager()
 

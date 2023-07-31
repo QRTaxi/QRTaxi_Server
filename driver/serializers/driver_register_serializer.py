@@ -17,6 +17,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     taxi_num = serializers.CharField(required=True, max_length=20,
                                      validators=[validate_taxi_num, UniqueValidator(queryset=CustomDriver.objects.all(), message='이미 존재하는 차량번호입니다.')])
     birth = serializers.DateField()
+    car_type = serializers.CharField(required=True, max_length=20)
 
     def validate(self, data):
         if data["password1"] != data["password2"]:
@@ -30,6 +31,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         data["phone_num"] = self.validated_data.get("phone_num", "")
         data["taxi_num"] = self.validated_data.get("taxi_num", "")
         data["birth"] = self.validated_data.get("birth", "")
+        data["car_type"] = self.validated_data.get("car_type", "")
 
         return data
 
@@ -42,6 +44,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.phone_num = self.cleaned_data.get('phone_num')
         user.taxi_num = self.cleaned_data.get('taxi_num')
         user.birth = self.cleaned_data.get('birth')
+        user.car_type = self.cleaned_data.get('car_type')
         user.save()
         adapter.save_user(request, user, self)
         return user
