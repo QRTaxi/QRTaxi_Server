@@ -13,7 +13,7 @@ def upload_to_s3(image_data, command):
     try:
         s3 = boto3.client('s3', aws_access_key_id=aws_access_key, aws_secret_access_key=aws_secret_key)
         random_uuid = uuid.uuid4()
-        object_name = f'map-{random_uuid}.png'
+        object_name = f'{command}-{random_uuid}.png'
         key = command + '/' + object_name
         s3.put_object(Body=image_data, Bucket=bucket_name, Key=key, ContentType='jpg')
         url = f"https://{bucket_name}.s3.ap-northeast-2.amazonaws.com/{key}"
