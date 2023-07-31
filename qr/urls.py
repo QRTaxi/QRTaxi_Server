@@ -1,6 +1,6 @@
 from django.urls import path
-from qr.views.place_view import PlaceView
-from qr.views.qr_image_view import QrImageView
+from qr.views import PlaceView
+from qr.views import QrImageView
 app_name = 'qr'
 
 urlpatterns = [

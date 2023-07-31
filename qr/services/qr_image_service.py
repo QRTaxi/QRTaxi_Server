@@ -1,6 +1,6 @@
 import qrcode
-from qr.serializers.qr_image_serializer import QrImageSerializer
-from qr.services.s3_service import upload_to_s3
+from qr.serializers import QrImageSerializer
+from qr.services import upload_to_s3
 from PIL import Image
 import json
 import requests

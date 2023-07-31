@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from qr.models.qr import Qr
+from qr.models import Qr
 
 class PlaceSerializer(serializers.ModelSerializer):
 

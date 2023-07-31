@@ -1,4 +1,4 @@
-from qr.serializers.place_serializer import PlaceSerializer
+from qr.serializers import PlaceSerializer
 import requests
 import io
 from decouple import config

@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status, exceptions
 from rest_framework.views import APIView
-from qr.services.qr_image_service import create_qr_image
+from qr.services import create_qr_image
 
 class QrImageView(APIView):
     """

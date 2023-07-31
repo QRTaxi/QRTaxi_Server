@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from qr.models.qr_image import QrImage
+from qr.models import QrImage
 
 class QrImageSerializer(serializers.ModelSerializer):
 
