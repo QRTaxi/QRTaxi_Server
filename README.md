@@ -18,15 +18,13 @@
 </br>
 
 ## 🚖 ERD
-<img width="785" alt="" src="">
+<img width="785" alt="" src="https://qrtaxi.s3.ap-northeast-2.amazonaws.com/logo/erd.png">
 </br>
 
 ## 🚖 API 명세서
-<img width="912" alt="6" src="">
+http://api.qrtaxi.kro.kr/swagger/
 </br>
 
-</br>
-</br>
 
 ## 📌 컨벤션
 ### 커밋 메세지

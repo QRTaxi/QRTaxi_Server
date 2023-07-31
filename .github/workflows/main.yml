@@ -21,7 +21,11 @@ jobs:
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
           echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
-          
+          echo "NCP_CLIENT_ID=${{ secrets.NCP_CLIENT_ID }}" >> .env
+          echo "NCP_CLIENT_SECRET=${{ secrets.NCP_CLIENT_SECRET }}" >> .env
+          echo "S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }}" >> .env
+          echo "S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }}" >> .env
+
       - name: Set up and build Docker Compose
         run: |
           sudo apt-get update
