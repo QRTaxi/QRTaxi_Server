@@ -26,7 +26,8 @@ class CustomDriver(AbstractBaseUser, PermissionsMixin, TimestampedModel):
         )
 
     birth = models.DateField(null=True)
-    is_running = models.BooleanField(default=False)
+    car_type = models.CharField(null=True, max_length=20)
+    is_able = models.BooleanField(default=False)
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
