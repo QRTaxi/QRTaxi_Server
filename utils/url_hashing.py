@@ -11,7 +11,6 @@ class Hashing():
     @staticmethod
     def encode(target: int):
         hashed = Hashing.hashids.encode(target)
-
         return hashed
     
     @staticmethod
