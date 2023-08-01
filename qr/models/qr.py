@@ -5,3 +5,4 @@ class Qr(models.Model):
     longitude = models.FloatField(verbose_name="경도")
     latitude = models.FloatField(verbose_name="위도")
     map_image = models.CharField(verbose_name="장소 이미지", max_length=256)
+    description = models.CharField(verbose_name="장소 상세설명", max_length=100)
