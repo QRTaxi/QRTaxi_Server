@@ -4,6 +4,6 @@ from . import views
 
 urlpatterns = [
    path('', views.TestView.as_view()),
-   path("liveblog/", views.liveblog_index),
+   path("liveblog/<str:post_pk>/", views.liveblog_index),
 ]
 
