@@ -6,7 +6,7 @@ from .mixins import ChannelLayerGroupSendMixin
 
 
 class Post(ChannelLayerGroupSendMixin, models.Model):
-    CHANNEL_LAYER_GROUP_NAME = "liveblog"
+    # CHANNEL_LAYER_GROUP_NAME = "liveblog"
 
     status_choices = (
         ('waiting', '배정중'),
@@ -23,30 +23,38 @@ class Post(ChannelLayerGroupSendMixin, models.Model):
     class Meta:
         ordering = ["-id"]
 
+    @property
+    def call_group_name(self):
+        return self.make_call_group_name(call=self)
+
+    @staticmethod
+    def make_call_group_name(call_pk=None):
+        return f"call-{call_pk}"
 
 def post__on_post_save(instance: Post, created: bool, **kwargs):
     if created:
         message_type = "liveblog.post.waiting"
     else:
-        call = Post.objects.get(id=instance.pk)
-        if call.status == 'success':
+        if instance.status == 'success':
             message_type = "liveblog.post.success"
 
-        elif call.status == 'riding':
+        elif instance.status == 'riding':
             message_type = "liveblog.post.riding"
 
-        elif call.status == 'finish':
+        elif instance.status == 'finish':
             message_type = "liveblog.post.finish"
             
         else:
             message_type = "liveblog.post.cancel"
 
-    post_id = instance.pk
+    post_pk = instance.pk
     #post_partial_url = reverse("post_partial", args=[post_id])
 
-    instance.channel_layer_group_send({
+    instance.channel_layer_group_send(
+        Post.make_call_group_name(post_pk),
+        {
         "type": message_type,
-        "post_id": post_id,
+        "post_id": post_pk,
         #"post_partial_url": post_partial_url,
     })
 
@@ -59,11 +67,13 @@ post_save.connect(
 
 
 def post__on_post_delete(instance: Post, **kwargs):
-    post_id = instance.pk
+    post_pk = instance.pk
 
-    instance.channel_layer_group_send({
+    instance.channel_layer_group_send(
+        Post.make_call_group_name(post_pk),
+        {
         "type": "liveblog.post.deleted",
-        "post_id": post_id,
+        "post_id": post_pk,
     })
 
 
