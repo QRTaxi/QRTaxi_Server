@@ -1,1 +1,1 @@
-from .call_main_service import get_main
+from .call_main_service import *

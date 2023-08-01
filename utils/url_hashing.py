@@ -18,7 +18,3 @@ class Hashing():
     def decode(target: str):
         original = Hashing.hashids.decode(target)
         return original[0]
-    
-test_hashed = Hashing.encode(1)
-print(test_hashed)
-print(Hashing.decode(test_hashed))
