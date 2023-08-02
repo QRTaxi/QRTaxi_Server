@@ -1,6 +1,6 @@
 from channels.generic.websocket import JsonWebsocketConsumer
 from asgiref.sync import async_to_sync
-from call.models import Assign
+from django.apps import apps
 
 class CallConsumer(JsonWebsocketConsumer):
     def __init__(self, *args, **kwargs):
@@ -8,6 +8,7 @@ class CallConsumer(JsonWebsocketConsumer):
         self.group_name = ""
 
     def connect(self):
+        Assign = apps.get_model('call', 'Assign') 
         assign_pk = self.scope["url_route"]["kwargs"]["assign_pk"]
         self.group_name = Assign.make_call_group_name(assign_pk)
 

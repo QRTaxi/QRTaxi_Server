@@ -1,6 +1,7 @@
 <h1>WS TEST</h1>
 
 <script>
+    console.log('{{ post_pk }}');
     const handlers = {
         ws: null,
         retry: 0,
@@ -43,25 +44,31 @@
             const message_json = event.data;
             console.log("웹소켓 텍스트 메세지 수신 :", message_json);
     
-            const { type, post_id, post_partial_url } = JSON.parse(message_json);
+            const { type, post_id } = JSON.parse(message_json);
     
             switch(type) {
-                case "liveblog.post.waiting":
+                case "call.assign.waiting":
                     this.post_created(post_id, post_partial_url);
+                    console.log("메시지타입 :", type);
                     break;
-                case "liveblog.post.success":
+                case "call.assign.success":
                     this.post_updated(post_id, post_partial_url);
+                    console.log("메시지타입 :", type);
                     break;
-                case "liveblog.post.riding":
+                case "call.assign.riding":
                     this.post_updated(post_id, post_partial_url);
+                    console.log("메시지타입 :", type);
                     break;
-                case "liveblog.post.finish":
+                case "call.assign.finish":
                     this.post_updated(post_id, post_partial_url);
+                    console.log("메시지타입 :", type);
                     break;
-                case "liveblog.post.cancel":
+                case "call.assign.cancel":
                     this.post_updated(post_id, post_partial_url);
+                    console.log("메시지타입 :", type);
                     break;
-                case "liveblog.post.deleted":
+                case "call.assign.deleted":
+                    console.log("메시지타입 :", type);
                     this.post_deleted(post_id);
                     break;
                 default:
@@ -91,7 +98,8 @@
     };
     
     const ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
-    const ws_url = ws_scheme + '://' + window.location.host + ':8000/ws/liveblog/';
+    const ws_url = ws_scheme + '://' + window.location.host + ':8000/ws/call/' + '{{ post_pk }}' + '/';;
+    //const ws_url = ws_scheme + '://' + window.location.host + '/ws/call/' + '{{ post_pk }}' + '/';;
 
     handlers.connect(ws_url);
     </script>
