@@ -16,7 +16,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     phone_num = serializers.CharField(required=True, max_length=20, validators=[validate_phone_num])
     taxi_num = serializers.CharField(required=True, max_length=20,
                                      validators=[validate_taxi_num, UniqueValidator(queryset=CustomDriver.objects.all(), message='이미 존재하는 차량번호입니다.')])
-    birth = serializers.DateField()
+    birth = serializers.CharField(max_length=20)
     car_type = serializers.CharField(required=True, max_length=20)
 
     def validate(self, data):
