@@ -26,6 +26,8 @@ jobs:
           echo "S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }}" >> .env
           echo "S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }}" >> .env
           echo "HASH_SALT=${{ secrets.HASH_SALT }}" >> .env
+          echo "REDIS_CACHE_HOST=${{ secrets.REDIS_CACHE_HOST }}" >> .env
+          echo "REDIS_CACHE_PORT=${{ secrets.REDIS_CACHE_PORT }}" >> .env
 
       - name: Set up and build Docker Compose
         run: |

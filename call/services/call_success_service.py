@@ -5,9 +5,13 @@ import urllib, json
 from rest_framework import exceptions
 from redis import Redis
 from utils import Hashing
+from decouple import config
 
 def get_driver_location(driver_id):
-    redis_con = Redis(host="redis_cache", port=6380)
+    redis_host = config('REDIS_CACHE_HOST')
+    redis_port = config('REDIS_CACHE_PORT')
+
+    redis_con = Redis(host=redis_host, port=redis_port)
     saved_location = redis_con.geopos("driver_location", driver_id)
     result = (saved_location[0][0], saved_location[0][1])
     return result

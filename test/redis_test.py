@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from redis import Redis
 from rest_framework.response import Response
 from rest_framework import status
+from decouple import config
 
 # 위치 저장하기 x:latitude(위도) y: longitude(경도)
 class UpdateDriverLocationView(APIView):
@@ -10,7 +11,10 @@ class UpdateDriverLocationView(APIView):
         driver_id = data.get('id')
         x = data.get('x')
         y = data.get('y')
-        redis_con = Redis(host="redis_cache", port=6380)
+        redis_host = config('REDIS_CACHE_HOST')
+        redis_port = config('REDIS_CACHE_PORT')
+
+        redis_con = Redis(host=redis_host, port=redis_port)
         # 위도, 경도, id 순으로
         try:
             if redis_con.ping():
@@ -40,7 +44,10 @@ class GetNearestDriversView(APIView):
         x = data.get('x')
         y = data.get('y')
 
-        redis_con = Redis(host="redis_cache", port=6380)
+        redis_host = config('REDIS_CACHE_HOST')
+        redis_port = config('REDIS_CACHE_PORT')
+
+        redis_con = Redis(host=redis_host, port=redis_port)
 
         nearest_drivers = redis_con.georadius('driver_location', x, y, 100, 'km', withdist=True, withcoord=True, sort='ASC', count=5)
 
