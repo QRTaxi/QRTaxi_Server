@@ -22,4 +22,7 @@ def post_main(post_main_data, hashed_qr_id: str):
     post_main_serializer = CallMainPostSerializer(data=post_main_data)
     post_main_serializer.is_valid(raise_exception=True)
     post_main_serializer.save()
-    return post_main_serializer.data
+    result = post_main_serializer.data
+    assign_id = result.get('id')
+    result['hashed_assign_id'] = Hashing.encode(assign_id)
+    return result
