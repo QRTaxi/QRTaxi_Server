@@ -5,7 +5,7 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 DATABASES = {
     'default': {
@@ -26,4 +26,3 @@ CHANNEL_LAYERS = {
         },
     },
 }
-
