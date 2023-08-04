@@ -10,7 +10,7 @@ def get_driver_location(data):
     redis_conn = get_redis_connection()
 
     if not all([driver_id, latitude, longitude]):
-        return {'status': 'ERROR', 'message': '잘못된 입력값이 있습니다. 모든 필드를 제대로 채웠는지 확인해주세요.'}
+        return {'status': 'FIELDERROR', 'message': '잘못된 입력값이 있습니다. 모든 필드를 제대로 채웠는지 확인해주세요.'}
 
     if redis_conn is None:
         return {'status': 'ERROR', 'message': '레디스 연결에 실패하셨습니다.'}

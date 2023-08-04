@@ -13,6 +13,8 @@ class UpdateDriverLocationView(APIView):
             response = get_driver_location(request.data)
             if response['status'] == 'ERROR':
                 return Response(response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            elif response['status'] == 'FIELDERROR':
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
             elif response['status'] == 'OK':
                 return Response(status=status.HTTP_200_OK)
         except exceptions.ValidationError as e:
