@@ -4,7 +4,7 @@ def get_driver_location(data):
     """
     택시 기사님 위치 저장하는 Service
     """
-    driver_id = data.get('drive_id')
+    driver_id = data.get('driver_id')
     latitude = data.get('latitude')
     longitude = data.get('longitude')
     redis_conn = get_redis_connection()
