@@ -1,1 +1,1 @@
-from .driver_location_service import get_driver_location
+from .driver_location_service import get_driver_location, get_nearest_drivers

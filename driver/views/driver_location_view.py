@@ -11,11 +11,11 @@ class UpdateDriverLocationView(APIView):
     def post(self, request, *args, **kwargs):
         try:
             response = get_driver_location(request.data)
-            if response['status'] == 'ERROR':
+            if response['statusCode'] == 500:
                 return Response(response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-            elif response['status'] == 'FIELDERROR':
+            elif response['statusCode'] == 400:
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
-            elif response['status'] == 'OK':
-                return Response(status=status.HTTP_200_OK)
+            elif response['statusCode'] == 200:
+                return Response(response, status=status.HTTP_200_OK)
         except exceptions.ValidationError as e:
-            return Response({"detail": "잘못된 요청입니다."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"statusCode":400, "detail": "잘못된 요청입니다."}, status=status.HTTP_400_BAD_REQUEST)
