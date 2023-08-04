@@ -9,6 +9,7 @@ class Assign(ChannelLayerGroupSendMixin, models.Model):
         ('waiting', '배정중'),
         ('success', '배정완료'),
         ('riding', '탑승완료'),
+        ('failed', '배정실패'),
         ('finish', '운행종료'),
         ('cancel', '취소'),
     )
@@ -35,10 +36,12 @@ def call__on_post_save(instance: Assign, created: bool, **kwargs):
             message_type = "call.assign.success"
         elif instance.status == 'riding':
             message_type = "call.assign.riding"
+        elif instance.status == 'failed':
+            message_type = "call.assign.failed" 
         elif instance.status == 'finish':
-            message_type = "call.assign.finish"        
-        else:
             message_type = "call.assign.finish"
+        else:
+            message_type = "call.assign.cancel"
 
     assign_pk = instance.pk
 
