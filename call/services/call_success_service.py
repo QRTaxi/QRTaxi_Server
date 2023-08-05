@@ -8,6 +8,9 @@ from utils import Hashing
 from decouple import config
 
 def get_driver_location(driver_id):
+    """
+    거리 시간계산을 위해 redis에 저장되어있는 기사의 위치를 불러오는 로직
+    """
     redis_host = config('REDIS_CACHE_HOST')
     redis_port = config('REDIS_CACHE_PORT')
 
@@ -45,9 +48,13 @@ def calculate_estimated_distance(assign_info):
     if (res == 200) :
         response_body = response.read().decode('utf-8')
         response_body_json = json.loads(response_body)
-        result = response_body_json['route']['trafast'][0]['summary']
+        try:
+            result = response_body_json['route']['trafast'][0]['summary']
+        except:
+            raise exceptions.ValidationError("좌표의 값이 잘못되었습니다.")
+        
         duration = change_ms_to_m(result['duration'])
-        return duration    
+        return duration 
     else:
         raise exceptions.ValidationError("시간 계산을 실패하였습니다.")
 
