@@ -34,10 +34,13 @@ class CallConsumer(JsonWebsocketConsumer):
     def call_assign_riding(self, event_dict):
         self.send_json(event_dict)
 
-    def call_assign_finish(self, event_dict):
+    def call_assign_failed(self, event_dict):
         self.send_json(event_dict)
 
     def call_assign_finish(self, event_dict):
+        self.send_json(event_dict)
+
+    def call_assign_cancel(self, event_dict):
         self.send_json(event_dict)
 
     def call_assign_deleted(self, event_dict):
