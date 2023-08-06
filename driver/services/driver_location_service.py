@@ -21,6 +21,9 @@ def get_driver_location(data):
     return {'statusCode': 200}
 
 def get_nearest_drivers(latitude, longitude):
+    """
+    반경 1km 내에 있는 기사 중 가까운 순으로 10명의 기사 추출하는 Service
+    """
     redis_conn = get_redis_connection()
 
     if not (-90 <= float(latitude) <= 90) or not (-180 <= float(longitude) <= 180) or not all([latitude, longitude]):
@@ -30,5 +33,5 @@ def get_nearest_drivers(latitude, longitude):
         return {'statusCode': 200, 'message': '레디스 연결에 실패하셨습니다.'}
     nearest_drivers = redis_conn.georadius('driver_location', longitude, latitude, 1, 'km', withcoord=True, sort='ASC', count=10)
 
-    driver_ids = [driver[0] for driver in nearest_drivers]
+    driver_ids = [int(driver[0].decode('utf-8')) for driver in nearest_drivers]
     return driver_ids

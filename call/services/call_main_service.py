@@ -2,6 +2,7 @@ from qr.models import Qr
 from utils.url_hashing import Hashing
 from call.serializers import CallMainGetSerializer, CallMainPostSerializer
 from django.utils import timezone
+from call.tasks import assign_driver_to_request
 
 def get_main(hashed_qr_id: str):
     """"
@@ -21,8 +22,11 @@ def post_main(post_main_data, hashed_qr_id: str):
     post_main_data['board_at'] = timezone.now()
     post_main_serializer = CallMainPostSerializer(data=post_main_data)
     post_main_serializer.is_valid(raise_exception=True)
-    post_main_serializer.save()
+    saved_assign = post_main_serializer.save()
     result = post_main_serializer.data
     assign_id = result.get('id')
     result['hashed_assign_id'] = Hashing.encode(assign_id)
+
+    # Celery를 이용하여 비동기적으로 드라이버에게 배정 요청을 보냄
+    assign_driver_to_request.delay(saved_assign.id, qr_id)
     return result

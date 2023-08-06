@@ -22,7 +22,10 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('redis', 6379)],  
+            "hosts": [('redis', 6379)],
         },
     },
 }
+
+CELERY_BROKER_URL = 'redis://redis_queue:6381/0'
+CELERY_RESULT_BACKEND = 'redis://redis_queue:6381/0'
