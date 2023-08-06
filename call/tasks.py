@@ -9,6 +9,9 @@ from driver.services import get_nearest_drivers
 from qr.models import Qr
 
 def check_response(assign_id, driver_id):
+    """
+    assign db 내에 status가 success로 바뀌었는지 응답 체크하는 로직
+    """
     try:
         assign = Assign.objects.get(id=assign_id)
         if assign.driver_id:
@@ -20,6 +23,9 @@ def check_response(assign_id, driver_id):
 
 @shared_task
 def assign_driver_to_request(assign_id, qr_id):
+    """
+    가까운 기사 10분에게 차례대로 메시지를 보내는 로직
+    """
     channel_layer = get_channel_layer()
 
     qr = Qr.objects.get(id=qr_id)
