@@ -1,6 +1,4 @@
 from asgiref.sync import async_to_sync
-from call.models import Assign
-from driver.models import CustomDriver
 from channels.generic.websocket import JsonWebsocketConsumer
 
 
