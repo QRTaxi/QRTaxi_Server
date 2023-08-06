@@ -7,10 +7,10 @@ def get_accept_status(data, driver):
     """
     assign_id = data.get('assign_id')
     accepted = data.get('accepted')
-    get_assign_info = Assign.objects.get(id=assign_id)
-    get_driver_info = CustomDriver.objects.get(id=driver.id)
 
     if accepted:
+        get_assign_info = Assign.objects.get(id=assign_id)
+        get_driver_info = CustomDriver.objects.get(id=driver.id)
         get_assign_info.status = 'success'
         get_assign_info.driver_id = driver
         get_driver_info.is_able = False
