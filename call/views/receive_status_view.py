@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
-class ReceiveAcceptView(APIView):
+class ReceiveStatusView(APIView):
     permission_classes = [IsAuthenticated]
     """
     기사님이 수락 요청하는 view
