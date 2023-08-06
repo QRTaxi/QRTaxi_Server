@@ -56,4 +56,6 @@ def assign_driver_to_request(assign_id, qr_id):
                 return "Accepted"
             time.sleep(1)
 
+    Assign.objects.filter(id=assign_id).update(status='failed')
+
     return "Not accepted"
