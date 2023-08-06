@@ -16,4 +16,4 @@ def get_accept_status(data, driver):
         get_driver_info.is_able = False
         get_assign_info.save(update_fields=['status', 'driver_id'])
         get_driver_info.save(update_fields=['is_able'])
-    return {'statusCode': 200, 'message': '기사 수락 요청 성공'}
+    return {'statusCode': 200}
