@@ -13,14 +13,6 @@ class DriverConsumer(JsonWebsocketConsumer):
         async_to_sync(self.channel_layer.group_add)(self.group_name, self.channel_name)
         self.accept()
 
-    def receive_json(self, content, **kwargs):
-        driver_id = content.get('driver_id')
-        assign_id = content.get('assign_id')
-        accepted = content.get('accepted')
-        if accepted:
-            Assign.objects.filter(id=assign_id).update(driver_id=driver_id, status='success')
-            CustomDriver.objects.filter(id=driver_id).update(is_able=False)
-
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(self.group_name, self.channel_name)
 
