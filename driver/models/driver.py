@@ -38,6 +38,3 @@ class CustomDriver(AbstractBaseUser, PermissionsMixin, TimestampedModel):
     REQUIRED_FIELDS = ["password", "name", "phone_num", "taxi_num", "car_type"]
 
     objects = UserManager()
-
-    def __str__(self):
-        return self.username
