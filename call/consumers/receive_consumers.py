@@ -10,13 +10,10 @@ class DriverConsumer(JsonWebsocketConsumer):
         self.group_name = "drivers"
 
     def connect(self):
-        print("CONNECTING")
         async_to_sync(self.channel_layer.group_add)(self.group_name, self.channel_name)
         self.accept()
-        print("CONNECTED")
 
     def receive_json(self, content, **kwargs):
-        print("Received a message : ", content)
         driver_id = content.get('driver_id')
         assign_id = content.get('assign_id')
         accepted = content.get('accepted')
