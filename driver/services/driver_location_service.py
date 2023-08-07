@@ -30,7 +30,7 @@ def get_nearest_drivers(latitude, longitude):
         return {'statusCode': 400, 'message': '잘못된 입력값이 있습니다. 모든 필드를 제대로 채웠는지 확인해주세요.'}
 
     if redis_conn is None:
-        return {'statusCode': 200, 'message': '레디스 연결에 실패하셨습니다.'}
+        return {'statusCode': 500, 'message': '레디스 연결에 실패하셨습니다.'}
     nearest_drivers = redis_conn.georadius('driver_location', longitude, latitude, 1, 'km', withcoord=True, sort='ASC', count=10)
 
     driver_ids = [int(driver[0].decode('utf-8')) for driver in nearest_drivers]
