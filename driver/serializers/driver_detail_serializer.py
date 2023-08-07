@@ -13,7 +13,8 @@ class CustomDriverDetailSerializer(serializers.ModelSerializer):
             "taxi_num",
             "birth",
             "is_able",
-            "car_type"
+            "car_type",
+
         ]
         read_only_fields = [
             "id",
