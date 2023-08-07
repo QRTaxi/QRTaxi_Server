@@ -8,5 +8,4 @@ urlpatterns = [
     path('signup/', CustomRegisterView.as_view()),
     path('update_location/', UpdateDriverLocationView.as_view()),
     path('operation/', DriverOperationView.as_view()),
-    path('an/', include('dj_rest_auth.urls')),
 ]
