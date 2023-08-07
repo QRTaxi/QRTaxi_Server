@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
 class CustomRegisterView(RegisterView):
+    '''
+    회원가입 응답메시지 커스텀한 뷰
+    '''
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
         if isinstance(exc, ValidationError):
@@ -24,6 +27,9 @@ class CustomRegisterView(RegisterView):
         return response_data
 
 class CustomLoginView(LoginView):
+    '''
+    로그인 응답메시지 커스텀한 뷰
+    '''
     def handle_exception(self, exc):
         response = super().handle_exception(exc)
         if isinstance(exc, ValidationError):
@@ -45,6 +51,9 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(LogoutView):
+    '''
+    로그아웃 응답메시지 커스텀한 뷰
+    '''
     def logout(self, request):
         super().logout(request)
         return Response({"statusCode": 200, "message": "성공적으로 로그아웃되었습니다.", 
