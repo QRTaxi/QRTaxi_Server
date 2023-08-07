@@ -2,11 +2,13 @@ from rest_framework import exceptions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from driver.services import change_driver_able
 
 
 class DriverOperationView(APIView):
     permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     """
     택시 기사님 운행 시작 view
     """

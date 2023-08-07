@@ -1,3 +1,5 @@
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status, exceptions
 from rest_framework.views import APIView
@@ -8,6 +10,8 @@ class CallFinishView(APIView):
     """
     손님 하차하는 view
     """
+    authentication_classes=[JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def post(self, request, assign_id: int):
         try:
             response = finish_call(request.user, assign_id)

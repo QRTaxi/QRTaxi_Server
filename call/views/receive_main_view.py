@@ -1,3 +1,5 @@
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status, exceptions
 from rest_framework.views import APIView
@@ -8,6 +10,8 @@ class ReceiveMainView(APIView):
     """
     배정 상세정보를 보여주는 view
     """
+    authentication_classes=[JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request, assign_id: int):
         try:
             response = get_assign(assign_id)
