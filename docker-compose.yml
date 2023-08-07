@@ -4,10 +4,8 @@ services:
     build: ./config/nginx
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - static_volume:/static
-      - ./ssl:/etc/nginx/conf.d
     image: 11thbackend/nginx:latest
     depends_on:
       - web
