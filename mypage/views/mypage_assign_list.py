@@ -7,6 +7,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
 class DriverAssignmentsView(APIView):
     '''
@@ -14,6 +15,7 @@ class DriverAssignmentsView(APIView):
     '''
     serializer_class = AssignSerializer
     authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         try:

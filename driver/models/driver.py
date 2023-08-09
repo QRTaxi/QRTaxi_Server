@@ -25,7 +25,7 @@ class CustomDriver(AbstractBaseUser, PermissionsMixin, TimestampedModel):
         error_messages={"unique": "이미 존재하는 차 번호입니다."},
         )
 
-    birth = models.DateField(null=True)
+    birth = models.CharField(max_length=20, null=True)
     car_type = models.CharField(max_length=20, null=False, blank=False)
     is_able = models.BooleanField(default=False)
     profile_image = models.CharField(max_length=256, null=True, blank=True)
@@ -38,6 +38,3 @@ class CustomDriver(AbstractBaseUser, PermissionsMixin, TimestampedModel):
     REQUIRED_FIELDS = ["password", "name", "phone_num", "taxi_num", "car_type"]
 
     objects = UserManager()
-
-    def __str__(self):
-        return self.username

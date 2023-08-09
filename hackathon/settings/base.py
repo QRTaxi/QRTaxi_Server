@@ -15,7 +15,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://127.0.0.1:8000', 'http://api.qrtaxi.kro.kr']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://127.0.0.1:8000', 'https://api.qrtaxi.co.kr']
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
@@ -151,6 +151,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S",
 }
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -199,3 +200,8 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = os.path.join(BASE_DIR, 'data/static')
+
+# Celery Configuration Options
+CELERY_TIMEZONE = "Asia/Seoul"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60

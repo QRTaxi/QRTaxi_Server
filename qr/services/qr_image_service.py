@@ -2,6 +2,7 @@ import qrcode
 from qr.serializers import QrImageSerializer
 from qr.services import upload_to_s3
 from PIL import Image
+from utils import Hashing
 import json
 import requests
 import io
@@ -19,8 +20,8 @@ def make_qr_image(qr_id):
         box_size=20,
         border=1
     )
-
-    image_url = "https://qr.com"
+    hashed = Hashing.encode(qr_id)
+    image_url = f"https://qrtaxi.co.kr/{hashed}"
     data = {
         "img_url": image_url,
         "location": qr_id

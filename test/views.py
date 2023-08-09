@@ -19,8 +19,7 @@ class TestView(APIView):
         data = create_post(request)
         return Response(data, status=status.HTTP_200_OK)
 
-def liveblog_index(request):
-    post_qs = Post.objects.all()
+def liveblog_index(request, post_pk):
     return render(request, "example.html", {
-        "post_list": post_qs,
+        "post_pk": post_pk,
     })

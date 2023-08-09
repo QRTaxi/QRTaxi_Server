@@ -13,7 +13,7 @@ urlpatterns = [
     path('call/', include('call.urls')),
     path('mypage/', include('mypage.urls')),
     path('report/', include('report.urls')),
-
+    path('utils/', include('utils.api.urls')),
 ]
 
 schema_view = get_schema_view(
