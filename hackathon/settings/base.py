@@ -15,11 +15,12 @@ SECRET_KEY = config('SECRET_KEY')
 
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://127.0.0.1:8000', 'https://api.qrtaxi.co.kr']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://127.0.0.1:8000', 'https://api.qrtaxi.co.kr', 'https://qrtaxi.co.kr']
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     'https://api.qrtaxi.co.kr',
+    'https://qrtaxi.co.kr',
    ]
 
 # Application definition
