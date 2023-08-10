@@ -5,6 +5,6 @@ from report.views.report_user_views import ReportUserView
 app_name = 'report'
 
 urlpatterns = [
-    path('/drvier', ReportDriverView.as_view(), name='report_drvier'),
-    path('/user', ReportUserView.as_view(), name='report_user'),
+    path('driver/', ReportDriverView.as_view(), name='report_drvier'),
+    path('user/', ReportUserView.as_view(), name='report_user'),
 ]

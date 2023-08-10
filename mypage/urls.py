@@ -7,5 +7,5 @@ app_name = 'mypage'
 
 urlpatterns = [
     path('', MypageDetailView.as_view(), name='mypage'),
-    path('/assignment', DriverAssignmentsView.as_view(), name='driver_assignments'),
+    path('assignment/', DriverAssignmentsView.as_view(), name='driver_assignments'),
 ]

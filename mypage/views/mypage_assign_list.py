@@ -17,16 +17,16 @@ class DriverAssignmentsView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get_object(self, pk):
+    def get_object(self, request):
         try:
-            return CustomDriver.objects.get(pk=pk)
+            return CustomDriver.objects.get(username=request.user)
         except CustomDriver.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        driver = self.get_object(pk)
+    def get(self, request, format=None):
+        driver = CustomDriver.objects.get(username=request.user)
         if driver != request.user:
-            raise PermissionDenied("권한이 없습니다.")
+            return Response({'statusCode': status.HTTP_401_UNAUTHORIZED, 'data':"권한이 없습니다."})
         assignments = Assign.objects.filter(driver_id=driver)
         serializer = AssignSerializer(assignments, many=True)
         return Response({'statusCode': status.HTTP_200_OK, 'data':serializer.data})

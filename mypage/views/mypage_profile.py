@@ -23,14 +23,14 @@ class MypageDetailView(APIView):
     """
     마이페이지 조회
     """
-    def get(self, request, pk, format=None):
+    def get(self, request, format=None):
         driver = CustomDriver.objects.get(username=request.user)
         serializer = MypageSerializer(driver)
         return Response(serializer.data, status=status.HTTP_200_OK)
     """
     마이페이지 수정
     """
-    def patch(self, request, pk, format=None):
+    def patch(self, request, format=None):
         driver = CustomDriver.objects.get(username=request.user)
         serializer = MypageSerializer(driver, data=request.data, partial=True)
         if serializer.is_valid():
