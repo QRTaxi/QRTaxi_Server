@@ -14,6 +14,8 @@ def check_response(assign_id, driver_id):
     """
     try:
         assign = Assign.objects.get(id=assign_id)
+        if assign.status == "cancel":
+            return "cancel"
         if assign.driver_id:
             return assign.status == "success" if assign.driver_id.id == driver_id else False
         else:
@@ -50,7 +52,9 @@ def assign_driver_to_request(assign_id, qr_id):
         # 지금은 테스트용으로 확인하느라 5초로 설정해두었습니다.
         for _ in range(5):
             result = check_response(assign_id, driver_id)
-            if result is None:
+            if result == "cancel":
+                return "Assign already canceled"
+            elif result is None:
                 return "Error occurred"
             elif result:
                 return "Accepted"
