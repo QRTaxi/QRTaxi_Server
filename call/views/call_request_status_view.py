@@ -11,6 +11,6 @@ class CallRequestStatusView(APIView):
     def post(self, request):
         try:
             response = response_status(request.data)
-            return Response(response, status=status.HTTP_201_CREATED)
+            return Response(response, status=status.HTTP_200_OK)
         except exceptions.ValidationError as e:
              return Response({"detail": "잘못된 요청입니다.", "error": e.detail}, status=status.HTTP_400_BAD_REQUEST)
