@@ -8,8 +8,6 @@ def get_assign(assign_id):
     try:
         assign = Assign.objects.get(pk=assign_id)
         serializer = AssignInfoSerializer(assign)
-        response = serializer.data
-        response["statusCode"] = 200
-        return response
+        return {"statusCode":200, "data":serializer.data}
     except Assign.DoesNotExist:
         return {"statusCode": 404, "message": "해당 배정정보가 없습니다."}
