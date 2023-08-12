@@ -25,23 +25,23 @@ class CallConsumer(JsonWebsocketConsumer):
                 self.channel_name,
             )
     
-    def call_assign_waiting(self, event_dict):
+    def waiting(self, event_dict):
         self.send_json(event_dict)
 
-    def call_assign_success(self, event_dict):
+    def success(self, event_dict):
         self.send_json(event_dict)
     
-    def call_assign_riding(self, event_dict):
+    def riding(self, event_dict):
         self.send_json(event_dict)
 
-    def call_assign_failed(self, event_dict):
+    def failed(self, event_dict):
         self.send_json(event_dict)
 
-    def call_assign_finish(self, event_dict):
+    def finish(self, event_dict):
         self.send_json(event_dict)
 
-    def call_assign_cancel(self, event_dict):
+    def cancel(self, event_dict):
         self.send_json(event_dict)
 
-    def call_assign_deleted(self, event_dict):
+    def deleted(self, event_dict):
         self.send_json(event_dict)
