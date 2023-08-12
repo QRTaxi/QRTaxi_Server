@@ -30,18 +30,18 @@ class Assign(ChannelLayerGroupSendMixin, models.Model):
     
 def call__on_post_save(instance: Assign, created: bool, **kwargs):
     if created:
-        message_type = "call.assign.waiting"
+        message_type = "waiting"
     else:
         if instance.status == 'success':
-            message_type = "call.assign.success"
+            message_type = "success"
         elif instance.status == 'riding':
-            message_type = "call.assign.riding"
+            message_type = "riding"
         elif instance.status == 'failed':
-            message_type = "call.assign.failed" 
+            message_type = "failed" 
         elif instance.status == 'finish':
-            message_type = "call.assign.finish"
+            message_type = "finish"
         else:
-            message_type = "call.assign.cancel"
+            message_type = "cancel"
 
     assign_pk = instance.pk
 
@@ -58,7 +58,7 @@ def call__on_post_delete(instance: Assign, **kwargs):
     instance.channel_layer_group_send(
         Assign.make_call_group_name(assign_pk),
         {
-        "type": "call.assign.deleted",
+        "type": "deleted",
         "post_id": assign_pk,
     })
 
