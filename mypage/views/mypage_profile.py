@@ -26,7 +26,7 @@ class MypageDetailView(APIView):
     def get(self, request, format=None):
         driver = CustomDriver.objects.get(username=request.user)
         serializer = MypageSerializer(driver)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'statusCode': status.HTTP_200_OK, 'data':serializer.data})
     """
     마이페이지 수정
     """
