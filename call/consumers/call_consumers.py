@@ -43,5 +43,5 @@ class CallConsumer(JsonWebsocketConsumer):
     def cancel(self, event_dict):
         self.send_json(event_dict)
 
-    def deleted(self, event_dict):
+    def error(self, event_dict):
         self.send_json(event_dict)
