@@ -29,7 +29,7 @@ def get_accept_status(data, driver):
         return {'statusCode': 404, 'message': "해당 배정정보가 없습니다."}
 
     if not validate_driver(assign_id, driver.id):
-        return {'statusCode': 400, 'message': "현재 처리 중인 기사가 아닙니다."}
+        return {'statusCode': 400, 'message': "현재 콜 요청을 받은 기사님이 아닙니다."}
 
     if accepted:
         if get_assign_info.status == "cancel":
