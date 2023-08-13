@@ -37,7 +37,7 @@ def get_accept_status(data, driver):
         try:
             get_driver_info = CustomDriver.objects.get(id=driver.id)
         except CustomDriver.DoesNotExist:
-            return {'statusCode': 404, 'message': "해당 가사님이 존재하지 않습니다."}
+            return {'statusCode': 404, 'message': "해당 기사님이 존재하지 않습니다."}
         get_assign_info.status = 'success'
         get_assign_info.driver_id = driver
         get_driver_info.is_able = False
