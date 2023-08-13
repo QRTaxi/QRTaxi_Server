@@ -27,22 +27,16 @@ class Assign(ChannelLayerGroupSendMixin, models.Model):
     @staticmethod
     def make_call_group_name(assign_pk=None):
         return f"call-{assign_pk}"
-    
-def call__on_post_save(instance: Assign, created: bool, **kwargs):
+
+def websocket_message(instance: Assign, created: bool):
     if created:
         message_type = "waiting"
     else:
-        if instance.status == 'success':
-            message_type = "success"
-        elif instance.status == 'riding':
-            message_type = "riding"
-        elif instance.status == 'failed':
-            message_type = "failed" 
-        elif instance.status == 'finish':
-            message_type = "finish"
+        if instance.status in ('success', 'riding', 'failed', 'finish'):
+            message_type = instance.status
         else:
-            message_type = "cancel"
-
+            message_type = "error"
+            
     assign_pk = instance.pk
 
     instance.channel_layer_group_send(
@@ -51,25 +45,12 @@ def call__on_post_save(instance: Assign, created: bool, **kwargs):
         "type": message_type,
         "assign_id": assign_pk,
     })
-
-def call__on_post_delete(instance: Assign, **kwargs):
-    assign_pk = instance.pk
-
-    instance.channel_layer_group_send(
-        Assign.make_call_group_name(assign_pk),
-        {
-        "type": "deleted",
-        "post_id": assign_pk,
-    })
-
+ 
+def call__on_post_save(instance: Assign, created: bool, **kwargs):
+    websocket_message(instance, created)
+    
 post_save.connect(
     call__on_post_save,
     sender=Assign,
     dispatch_uid="call__on_post_save",
-)
-
-post_delete.connect(
-    call__on_post_delete,
-    sender=Assign,
-    dispatch_uid="call__on_post_delete",
 )
