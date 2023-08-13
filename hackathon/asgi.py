@@ -11,7 +11,15 @@ from channels.routing import URLRouter
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter
 from call.routings import call_routing
+import firebase_admin
+from firebase_admin import credentials
+from decouple import config
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hackathon.settings')
+
+cred_path = config("FIRE_BASE_JSON_KEY_PATH")
+cred = credentials.Certificate(cred_path)
+firebase_admin.initialize_app(cred)
 
 django_asgi_app = get_asgi_application()
 
