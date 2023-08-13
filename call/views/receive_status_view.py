@@ -15,6 +15,11 @@ class ReceiveStatusView(APIView):
     def post(self, request):
         try:
             response = get_accept_status(request.data, request.user)
-            return Response(response, status=status.HTTP_200_OK)
+            if response["statusCode"] == 200:
+                return Response(response, status=status.HTTP_200_OK)
+            elif response["statusCode"] == 400:
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
+            elif response["statusCode"] == 404:
+                return Response(response, status=status.HTTP_404_NOT_FOUND)
         except exceptions.ValidationError:
             return Response({"statusCode": 400, "detail": "잘못된 요청입니다."}, status=status.HTTP_400_BAD_REQUEST)
