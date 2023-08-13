@@ -28,7 +28,6 @@ jobs:
           echo "HASH_SALT=${{ secrets.HASH_SALT }}" >> .env
           echo "REDIS_CACHE_HOST=${{ secrets.REDIS_CACHE_HOST }}" >> .env
           echo "REDIS_CACHE_PORT=${{ secrets.REDIS_CACHE_PORT }}" >> .env
-          echo "FCM_API_KEY=${{ secrets.FCM_API_KEY }}" >> .env
 
       - name: Set up and build Docker Compose
         run: |

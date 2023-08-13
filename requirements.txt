@@ -50,7 +50,6 @@ pyasn1-modules==0.3.0
 pycparser==2.21
 pydantic==2.1.1
 pydantic_core==2.4.0
-pyfcm==1.5.4
 PyJWT==2.8.0
 PyMySQL==1.1.0
 pyOpenSSL==23.2.0

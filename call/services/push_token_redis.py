@@ -14,4 +14,4 @@ def get_push_token_from_redis(assign_id: int):
     token = redis_con.get(f"assign:{assign_id}")
     if token is None:
         raise exceptions.NotFound("토큰이 존재하지 않습니다.")
-    return token
+    return token.decode('utf-8')
