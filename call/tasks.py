@@ -30,7 +30,7 @@ def assign_driver_to_request(assign_id, qr_id):
     가까운 기사 10분에게 차례대로 메시지를 보내는 로직
     """
     channel_layer = get_channel_layer()
-    redis_conn = get_redis_connection()
+    redis_conn = get_redis_connection(db_select=1)
 
     qr = Qr.objects.get(id=qr_id)
     user_longitude = qr.longitude

@@ -12,7 +12,7 @@ def get_driver_location(driver_id):
     """
     거리 시간계산을 위해 redis에 저장되어있는 기사의 위치를 불러오는 로직
     """
-    redis_con = get_redis_connection()
+    redis_con = get_redis_connection(db_select=0)
     if redis_con == None:
         raise exceptions.ValidationError("레디스 연결에 실패하였습니다.")
     try:

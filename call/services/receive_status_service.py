@@ -7,7 +7,7 @@ def validate_driver(assign_id, driver_id):
     현재 수락 요청을 보낸 기사 id와 콜요청 메시지 받은 기사와 일치하는지 확인
     """
     key = f'assign_{assign_id}'
-    redis_conn = get_redis_connection()
+    redis_conn = get_redis_connection(db_select=1)
     current_driver_id = redis_conn.lindex(key, 0)
 
     if current_driver_id is None:
