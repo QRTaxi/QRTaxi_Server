@@ -32,7 +32,7 @@ def websocket_message(instance: Assign, created: bool):
     if created:
         message_type = "waiting"
     else:
-        if instance.status in ('success', 'riding', 'failed', 'finish'):
+        if instance.status in ('success', 'riding', 'failed', 'finish', 'cancel'):
             message_type = instance.status
         else:
             message_type = "error"
