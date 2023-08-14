@@ -12,7 +12,6 @@ def websocket_message(instance, created: bool):
             message_type = "error"
             
     assign_pk = instance.pk
-
     instance.channel_layer_group_send(
         Assign.make_call_group_name(assign_pk),
         {
