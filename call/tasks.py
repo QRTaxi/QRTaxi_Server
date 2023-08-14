@@ -71,6 +71,8 @@ def assign_driver_to_request(assign_id, qr_id):
             time.sleep(1)
         redis_conn.lpop(key)
 
-    Assign.objects.filter(id=assign_id).update(status='failed')
+    get_assign_info = Assign.objects.get(id=assign_id)
+    get_assign_info.status = 'failed'
+    get_assign_info.save(update_fields=['status'])
 
     return "Not accepted"
