@@ -7,6 +7,7 @@ from channels.layers import get_channel_layer
 from driver.models import CustomDriver
 from driver.services import get_nearest_drivers
 from qr.models import Qr
+from utils.redis_utils import get_redis_connection
 
 def check_response(assign_id, driver_id):
     """
@@ -29,16 +30,25 @@ def assign_driver_to_request(assign_id, qr_id):
     가까운 기사 10분에게 차례대로 메시지를 보내는 로직
     """
     channel_layer = get_channel_layer()
+    redis_conn = get_redis_connection(db_select=1)
 
     qr = Qr.objects.get(id=qr_id)
     user_longitude = qr.longitude
     user_latitude = qr.latitude
     driver_id_list = get_nearest_drivers(user_latitude, user_longitude)
 
+    key = f'assign_{assign_id}'
+    redis_conn.delete(key)
+    redis_conn.rpush(key, *driver_id_list)
+    redis_conn.expire(key, 3600)
 
     for driver_id in driver_id_list:
+        if int(redis_conn.lindex(key, 0)) != driver_id:
+            continue
+
         driver = CustomDriver.objects.get(id=driver_id)
         if not driver.is_able:
+            redis_conn.lpop(key)
             continue
 
         async_to_sync(channel_layer.group_send)(
@@ -59,6 +69,7 @@ def assign_driver_to_request(assign_id, qr_id):
             elif result:
                 return "Accepted"
             time.sleep(1)
+        redis_conn.lpop(key)
 
     Assign.objects.filter(id=assign_id).update(status='failed')
 
