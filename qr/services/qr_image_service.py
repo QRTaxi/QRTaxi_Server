@@ -21,7 +21,7 @@ def make_qr_image(qr_id):
         border=1
     )
     hashed = Hashing.encode(qr_id)
-    image_url = f"https://qrtaxi.co.kr/{hashed}"
+    image_url = f"https://qrtaxi.co.kr/booking/{hashed}"
     data = {
         "img_url": image_url,
         "location": qr_id
