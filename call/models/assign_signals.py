@@ -18,6 +18,17 @@ def websocket_message(instance, created: bool):
         "type": message_type,
         "assign_id": assign_pk,
     })
+    
+    if instance.status == 'cancel' and instance.driver_id:
+        message_type = "cancel"
+        instance.channel_layer_group_send(
+            "drivers",
+            {
+                "assign_id": assign_pk,
+                "driver_id": instance.driver_id.id,
+                "type": message_type,
+            }
+        )
 
 def send_push_notification(instance):
     from call.services import get_push_token_from_redis
