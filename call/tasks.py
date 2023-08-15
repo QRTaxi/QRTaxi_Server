@@ -23,7 +23,15 @@ def check_response(assign_id, driver_id):
             return False
     except Assign.DoesNotExist:
         return None
-
+    
+def check_already_driver(driver_id, assign_id, redis_conn):
+    key = f"assign_set_{assign_id}"
+    is_exist_in_set = redis_conn.sismember(key, driver_id)
+    if not is_exist_in_set:
+        return False
+    else:
+        return True
+    
 @shared_task
 def assign_driver_to_request(assign_id, qr_id):
     """
@@ -35,44 +43,61 @@ def assign_driver_to_request(assign_id, qr_id):
     qr = Qr.objects.get(id=qr_id)
     user_longitude = qr.longitude
     user_latitude = qr.latitude
-    driver_id_list = get_nearest_drivers(user_latitude, user_longitude)
+    
+    retry_count = 0
+    max_retries = 11
 
-    key = f'assign_{assign_id}'
-    redis_conn.delete(key)
-    redis_conn.rpush(key, *driver_id_list)
-    redis_conn.expire(key, 3600)
+    while retry_count <= max_retries:
+        driver_id_list = get_nearest_drivers(user_latitude, user_longitude)
 
-    for driver_id in driver_id_list:
-        if int(redis_conn.lindex(key, 0)) != driver_id:
+        key = f'assign_{assign_id}'
+        redis_conn.delete(key)
+        redis_conn.rpush(key, *driver_id_list)
+        retry_count += 1
+
+        if redis_conn.llen(key) == 0 and retry_count == max_retries:
+            get_assign_info = Assign.objects.get(id=assign_id)
+            get_assign_info.status = 'failed'
+            get_assign_info.save(update_fields=['status'])
+            return "Not accepted"
+
+        if redis_conn.llen(key) == 0:
+            if retry_count == max_retries:
+                continue
+            time.sleep(2)
             continue
 
-        driver = CustomDriver.objects.get(id=driver_id)
-        if not driver.is_able:
+        for driver_id in driver_id_list:
+            if retry_count > 1:
+                if check_already_driver(driver_id, assign_id, redis_conn):
+                    continue
+
+            if int(redis_conn.lindex(key, 0)) != driver_id:
+                continue
+
+            driver = CustomDriver.objects.get(id=driver_id)
+            if not driver.is_able:
+                redis_conn.lpop(key)
+                continue
+
+            async_to_sync(channel_layer.group_send)(
+                "drivers",
+                {
+                    "type": "send_message",
+                    "driver_id": driver_id,
+                    "assign_id": assign_id,
+                },
+            )
+            # 지금은 테스트용으로 확인하느라 5초로 설정해두었습니다.
+            for _ in range(5):
+                result = check_response(assign_id, driver_id)
+                if result == "cancel":
+                    return "Assign already canceled"
+                elif result is None:
+                    return "Error occurred"
+                elif result:
+                    return "Accepted"
+                time.sleep(1)
             redis_conn.lpop(key)
-            continue
+            redis_conn.sadd(f"assign_set_{assign_id}", driver_id)
 
-        async_to_sync(channel_layer.group_send)(
-            "drivers",
-            {
-                "type": "send_message",
-                "driver_id": driver_id,
-                "assign_id": assign_id,
-            },
-        )
-        # 지금은 테스트용으로 확인하느라 5초로 설정해두었습니다.
-        for _ in range(5):
-            result = check_response(assign_id, driver_id)
-            if result == "cancel":
-                return "Assign already canceled"
-            elif result is None:
-                return "Error occurred"
-            elif result:
-                return "Accepted"
-            time.sleep(1)
-        redis_conn.lpop(key)
-
-    get_assign_info = Assign.objects.get(id=assign_id)
-    get_assign_info.status = 'failed'
-    get_assign_info.save(update_fields=['status'])
-
-    return "Not accepted"
