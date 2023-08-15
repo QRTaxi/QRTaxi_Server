@@ -68,7 +68,7 @@ def get_success_info(hashed_assign_id: str):
     try:
         assign_id = Hashing.decode(hashed_assign_id)
         get_assign_info = Assign.objects.select_related('qr_id', 'driver_id').get(id=assign_id)
-        if get_assign_info.status == 'success':
+        if get_assign_info.status in ('success', 'riding'):
             get_assign_serializer = CallSuccessGetSerializer(get_assign_info)
             result = get_assign_serializer.data
             result['estimated_time'] = calculate_estimated_distance(get_assign_info)
