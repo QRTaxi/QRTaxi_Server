@@ -22,3 +22,6 @@ class DriverConsumer(JsonWebsocketConsumer):
             'driver_id': driver_id,
             'assign_id': assign_id,
         })
+
+    def cancel(self, event_dict):
+        self.send_json(event_dict)
