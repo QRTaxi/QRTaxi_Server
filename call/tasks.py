@@ -58,7 +58,7 @@ def assign_driver_to_request(assign_id, qr_id):
 
         driver_id_list = get_nearest_drivers(user_latitude, user_longitude)
 
-        if retry_count>1 and redis_conn.llen(key) == 0:
+        if retry_count > 1 and redis_conn.llen(key) == 0:
             if retry_count == max_retries:
                 continue
             time.sleep(2)
@@ -100,5 +100,6 @@ def assign_driver_to_request(assign_id, qr_id):
                 elif result:
                     return "Accepted"
                 time.sleep(1)
+                
             redis_conn.lpop(key)
             redis_conn.sadd(f"assign_set_{assign_id}", driver_id)
