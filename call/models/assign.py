@@ -1,8 +1,9 @@
 from django.db import models
 from qr.models import Qr
 from driver.models import CustomDriver
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save
 from call.mixins import ChannelLayerGroupSendMixin
+from .assign_signals import websocket_message, send_push_notification
 
 class Assign(ChannelLayerGroupSendMixin, models.Model):
     STATUS_CHOICES = (
@@ -27,39 +28,11 @@ class Assign(ChannelLayerGroupSendMixin, models.Model):
     @staticmethod
     def make_call_group_name(assign_pk=None):
         return f"call-{assign_pk}"
-
-def websocket_message(instance: Assign, created: bool):
-    if created:
-        message_type = "waiting"
-    else:
-        if instance.status in ('success', 'riding', 'failed', 'finish', 'cancel'):
-            message_type = instance.status
-        else:
-            message_type = "error"
-            
-    assign_pk = instance.pk
-
-    instance.channel_layer_group_send(
-        Assign.make_call_group_name(assign_pk),
-        {
-        "type": message_type,
-        "assign_id": assign_pk,
-    })
-
-    if instance.status == 'cancel' and instance.driver_id:
-        message_type = "cancel"
-        instance.channel_layer_group_send(
-            "drivers",
-            {
-                "assign_id": assign_pk,
-                "driver_id": instance.driver_id.id,
-                "type": message_type,
-            }
-        )
-
+    
 def call__on_post_save(instance: Assign, created: bool, **kwargs):
     websocket_message(instance, created)
-    
+    send_push_notification(instance)
+
 post_save.connect(
     call__on_post_save,
     sender=Assign,

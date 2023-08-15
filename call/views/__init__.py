@@ -6,3 +6,4 @@ from .call_riding_view import CallRidingView
 from .call_finish_view import CallFinishView
 from .receive_main_view import ReceiveMainView
 from .call_request_status_view import CallRequestStatusView
+from .call_push_token_view import CallPushTokenView

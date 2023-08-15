@@ -1,5 +1,15 @@
 from django.urls import path
-from call.views import CallMainView, CallSuccessView, CallCancelView, ReceiveStatusView, ReceiveMainView, CallRidingView, CallFinishView, CallRequestStatusView
+from call.views import (
+     CallMainView,
+     CallSuccessView,
+     CallCancelView,
+     ReceiveStatusView,
+     ReceiveMainView,
+     CallRidingView,
+     CallFinishView,
+     CallRequestStatusView,
+     CallPushTokenView,
+     )
 from test.views import liveblog_index
 app_name = 'call'
 
@@ -13,5 +23,6 @@ urlpatterns = [
     path('<int:assign_id>/', ReceiveMainView.as_view()),
     path('<int:assign_id>/riding/', CallRidingView.as_view()),
     path('<int:assign_id>/finish/', CallFinishView.as_view()),
+    path('push/token/', CallPushTokenView.as_view()),
 ]
 
