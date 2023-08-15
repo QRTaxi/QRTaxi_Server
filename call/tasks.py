@@ -43,33 +43,35 @@ def assign_driver_to_request(assign_id, qr_id):
     qr = Qr.objects.get(id=qr_id)
     user_longitude = qr.longitude
     user_latitude = qr.latitude
-    
+
     retry_count = 0
     max_retries = 11
 
     while retry_count <= max_retries:
-        driver_id_list = get_nearest_drivers(user_latitude, user_longitude)
-
-        key = f'assign_{assign_id}'
-        redis_conn.delete(key)
-        redis_conn.rpush(key, *driver_id_list)
         retry_count += 1
 
-        if redis_conn.llen(key) == 0 and retry_count == max_retries:
+        if retry_count == max_retries:
             get_assign_info = Assign.objects.get(id=assign_id)
             get_assign_info.status = 'failed'
             get_assign_info.save(update_fields=['status'])
             return "Not accepted"
 
-        if redis_conn.llen(key) == 0:
+        driver_id_list = get_nearest_drivers(user_latitude, user_longitude)
+
+        if retry_count>1 and redis_conn.llen(key) == 0:
             if retry_count == max_retries:
                 continue
             time.sleep(2)
             continue
+        key = f'assign_{assign_id}'
+        redis_conn.delete(key)
+        if driver_id_list:
+            redis_conn.rpush(key, *driver_id_list)
 
         for driver_id in driver_id_list:
             if retry_count > 1:
                 if check_already_driver(driver_id, assign_id, redis_conn):
+                    redis_conn.lpop(key)
                     continue
 
             if int(redis_conn.lindex(key, 0)) != driver_id:
@@ -100,4 +102,3 @@ def assign_driver_to_request(assign_id, qr_id):
                 time.sleep(1)
             redis_conn.lpop(key)
             redis_conn.sadd(f"assign_set_{assign_id}", driver_id)
-
