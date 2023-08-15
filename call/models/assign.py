@@ -45,7 +45,18 @@ def websocket_message(instance: Assign, created: bool):
         "type": message_type,
         "assign_id": assign_pk,
     })
- 
+
+    if instance.status == 'cancel' and instance.driver_id:
+        message_type = "cancel"
+        instance.channel_layer_group_send(
+            "drivers",
+            {
+                "assign_id": assign_pk,
+                "driver_id": instance.driver_id.id,
+                "type": message_type,
+            }
+        )
+
 def call__on_post_save(instance: Assign, created: bool, **kwargs):
     websocket_message(instance, created)
     
