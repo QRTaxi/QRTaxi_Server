@@ -31,7 +31,8 @@ class Assign(ChannelLayerGroupSendMixin, models.Model):
     
 def call__on_post_save(instance: Assign, created: bool, **kwargs):
     websocket_message(instance, created)
-    send_push_notification(instance)
+    if not created:
+        send_push_notification(instance)
 
 post_save.connect(
     call__on_post_save,
