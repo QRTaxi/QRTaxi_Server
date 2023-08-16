@@ -30,9 +30,13 @@ class Assign(ChannelLayerGroupSendMixin, models.Model):
         return f"call-{assign_pk}"
     
 def call__on_post_save(instance: Assign, created: bool, **kwargs):
-    websocket_message(instance, created)
-    if not created:
-        send_push_notification(instance)
+    try:
+        if not created:
+            send_push_notification(instance)
+    except:
+        print("푸시 알람 실패")
+    finally:
+        websocket_message(instance, created)
 
 post_save.connect(
     call__on_post_save,
