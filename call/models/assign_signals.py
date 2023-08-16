@@ -50,6 +50,9 @@ def send_push_notification(instance):
             title='큐택 택시 정보 알림',
             body=body
         ),
+        data = {
+            'status': instance.status
+        },
         token=registration_token,
     )
     response = messaging.send(message)
