@@ -85,9 +85,9 @@ def assign_driver_to_request(assign_id, qr_id):
             async_to_sync(channel_layer.group_send)(
                 "drivers",
                 {
-                    "type": "send_message",
-                    "driver_id": driver_id,
                     "assign_id": assign_id,
+                    "driver_id": driver_id,
+                    "type": "send_message",
                 },
             )
             # 지금은 테스트용으로 확인하느라 5초로 설정해두었습니다.
