@@ -19,5 +19,7 @@ class CallRidingView(APIView):
                 return Response(response, status=status.HTTP_200_OK)
             elif response["statusCode"] == 404:
                 return Response(response, status=status.HTTP_404_NOT_FOUND)
+            elif response["statusCode"] == 400:
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
         except exceptions.ValidationError:
              return Response({"statusCode":400, "detail": "잘못된 요청입니다."}, status=status.HTTP_400_BAD_REQUEST)

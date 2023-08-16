@@ -17,10 +17,12 @@ class DriverConsumer(JsonWebsocketConsumer):
     def send_message(self, event):
         driver_id = event['driver_id']
         assign_id = event['assign_id']
+        type = event['type']
 
         self.send_json({
-            'driver_id': driver_id,
             'assign_id': assign_id,
+            'driver_id': driver_id,
+            'type': type,
         })
 
     def cancel(self, event_dict):
