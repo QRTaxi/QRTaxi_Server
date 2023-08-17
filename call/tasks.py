@@ -52,6 +52,8 @@ def assign_driver_to_request(assign_id, qr_id):
 
         if retry_count == max_retries:
             get_assign_info = Assign.objects.get(id=assign_id)
+            if get_assign_info.status == "cancel":
+                return "Assign already canceled"
             get_assign_info.status = 'failed'
             get_assign_info.save(update_fields=['status'])
             return "Not accepted"
@@ -100,6 +102,6 @@ def assign_driver_to_request(assign_id, qr_id):
                 elif result:
                     return "Accepted"
                 time.sleep(1)
-                
+
             redis_conn.lpop(key)
             redis_conn.sadd(f"assign_set_{assign_id}", driver_id)
