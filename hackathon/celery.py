@@ -13,8 +13,7 @@ app.autodiscover_tasks()
 
 cred_path = config("FIRE_BASE_JSON_KEY_PATH")
 cred = credentials.Certificate(cred_path)
-if not firebase_admin._apps:
-    firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app(cred, name='celery_app')
 
 #테스트할 때만 주석해제하고 실제로 배포할 때는 주석처리하기
 #@app.task(bind=True, ignore_result=True)
