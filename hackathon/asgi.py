@@ -18,7 +18,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hackathon.settings')
 
 cred_path = config("FIRE_BASE_JSON_KEY_PATH")
 cred = credentials.Certificate(cred_path)
-firebase_admin.initialize_app(cred)
+if not firebase_admin._apps:
+    firebase_admin.initialize_app(cred)
 
 django_asgi_app = get_asgi_application()
 
