@@ -33,8 +33,8 @@ def call__on_post_save(instance: Assign, created: bool, **kwargs):
     try:
         if not created:
             send_push_notification(instance)
-    except:
-        print("푸시 알람 실패")
+    except Exception as e:
+        print("푸시 알람 실패", e)
     finally:
         websocket_message(instance, created)
 
