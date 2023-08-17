@@ -1,4 +1,5 @@
 from firebase_admin import messaging
+import firebase_admin
 
 def websocket_message(instance, created: bool):
     from . import Assign
@@ -55,5 +56,10 @@ def send_push_notification(instance):
         },
         token=registration_token,
     )
-    response = messaging.send(message)
+    if instance.status == "failed":
+        app = firebase_admin.get_app('celery_app')
+    else:
+        app = firebase_admin.get_app('asgi_app')
+    
+    response = messaging.send(message, app=app)
     print('Successfully sent message:', response)
