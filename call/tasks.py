@@ -93,7 +93,7 @@ def assign_driver_to_request(assign_id, qr_id):
                 },
             )
             # 지금은 테스트용으로 확인하느라 5초로 설정해두었습니다.
-            for _ in range(5):
+            for _ in range(10):
                 result = check_response(assign_id, driver_id)
                 if result == "cancel":
                     return "Assign already canceled"
