@@ -27,6 +27,6 @@ class DriverAssignmentsView(APIView):
         driver = CustomDriver.objects.get(username=request.user)
         if driver != request.user:
             return Response({'statusCode': status.HTTP_401_UNAUTHORIZED, 'data':"권한이 없습니다."})
-        assignments = Assign.objects.filter(driver_id=driver)
+        assignments = Assign.objects.filter(driver_id=driver, status='finish')
         serializer = AssignSerializer(assignments, many=True)
         return Response({'statusCode': status.HTTP_200_OK, 'data':serializer.data})
